@@ -4,6 +4,8 @@ import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 import { RegistrosModule } from './registros/registros.module';
 import { MedidorModule } from './medidor/medidor.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -27,7 +29,7 @@ import { MedidorModule } from './medidor/medidor.module';
         entities: [join(__dirname, '**', '*.{ts,js}')],
 
         // NO sincronizar para evitar modificar tu BD
-        synchronize: false,
+        synchronize: true,
         autoLoadEntities: true,
         logging: true, // opcional para depuración
       }),
@@ -37,5 +39,7 @@ import { MedidorModule } from './medidor/medidor.module';
 
     MedidorModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
