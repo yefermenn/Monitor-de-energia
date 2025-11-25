@@ -6,6 +6,8 @@ import { RegistrosModule } from './registros/registros.module';
 import { MedidorModule } from './medidor/medidor.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UsuariosModule } from './usuarios/usuarios.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -38,6 +40,9 @@ import { AppService } from './app.service';
     RegistrosModule,
 
     MedidorModule,
+    UsuariosModule,
+    // Módulo que escucha NOTIFY y emite por WebSocket
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

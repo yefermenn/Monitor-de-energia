@@ -28,12 +28,109 @@ export class RegistrosService {
     // 2️⃣ Crear el registro
     const registro = this.registrosRepo.create({
       numeroSensor: dto.numeroSensor,
-      valorWatios: dto.valorWatios,
+      valorVatios1: dto.valorVatios1,
+      valorVatios2: dto.valorVatios2,
       timestamp: dto.timestamp ?? new Date(),
       medidorCodigo: medidor, // asignar la relación
     });
 
     // 3️⃣ Guardar
     return await this.registrosRepo.save(registro);
+  }
+
+  async obtenerPromedioUltimas24Horas() {
+    // Calcular hace 24 horas desde ahora
+    const hace24Horas = new Date(Date.now() - 24 * 60 * 60 * 1000);
+
+    // Realizar la consulta con promedio de los valores
+    const resultado = await this.registrosRepo
+      .createQueryBuilder('registro')
+      .select('AVG(CAST(registro.valorVatios1 AS FLOAT))', 'promedioVatios1')
+      .addSelect('AVG(CAST(registro.valorVatios2 AS FLOAT))', 'promedioVatios2')
+      .addSelect('COUNT(registro.id)', 'totalRegistros')
+      .where('registro.timestamp >= :hace24Horas', { hace24Horas })
+      .getRawOne();
+
+    return {
+      promedioVatios1: parseFloat(resultado?.promedioVatios1 || 0),
+      promedioVatios2: parseFloat(resultado?.promedioVatios2 || 0),
+      totalRegistros: parseInt(resultado?.totalRegistros || 0),
+      periodo: {
+        desde: hace24Horas,
+        hasta: new Date(),
+      },
+    };
+  }
+
+  async obtenerPromedioUltimos7Dias() {
+    // Calcular hace 7 días desde ahora
+    const hace7Dias = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+
+    // Realizar la consulta con promedio de los valores
+    const resultado = await this.registrosRepo
+      .createQueryBuilder('registro')
+      .select('AVG(CAST(registro.valorVatios1 AS FLOAT))', 'promedioVatios1')
+      .addSelect('AVG(CAST(registro.valorVatios2 AS FLOAT))', 'promedioVatios2')
+      .addSelect('COUNT(registro.id)', 'totalRegistros')
+      .where('registro.timestamp >= :hace7Dias', { hace7Dias })
+      .getRawOne();
+
+    return {
+      promedioVatios1: parseFloat(resultado?.promedioVatios1 || 0),
+      promedioVatios2: parseFloat(resultado?.promedioVatios2 || 0),
+      totalRegistros: parseInt(resultado?.totalRegistros || 0),
+      periodo: {
+        desde: hace7Dias,
+        hasta: new Date(),
+      },
+    };
+  }
+
+  async obtenerPromedioUltimoMes() {
+    // Calcular hace 30 días desde ahora
+    const hace30Dias = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+
+    // Realizar la consulta con promedio de los valores
+    const resultado = await this.registrosRepo
+      .createQueryBuilder('registro')
+      .select('AVG(CAST(registro.valorVatios1 AS FLOAT))', 'promedioVatios1')
+      .addSelect('AVG(CAST(registro.valorVatios2 AS FLOAT))', 'promedioVatios2')
+      .addSelect('COUNT(registro.id)', 'totalRegistros')
+      .where('registro.timestamp >= :hace30Dias', { hace30Dias })
+      .getRawOne();
+
+    return {
+      promedioVatios1: parseFloat(resultado?.promedioVatios1 || 0),
+      promedioVatios2: parseFloat(resultado?.promedioVatios2 || 0),
+      totalRegistros: parseInt(resultado?.totalRegistros || 0),
+      periodo: {
+        desde: hace30Dias,
+        hasta: new Date(),
+      },
+    };
+  }
+
+  async obtenerPromedioUltimoAno() {
+    // Calcular hace 365 días desde ahora (último año aproximado)
+    const hace365Dias = new Date(Date.now() - 365 * 24 * 60 * 60 * 1000);
+
+    // Realizar la consulta con promedio de los valores
+    const resultado = await this.registrosRepo
+      .createQueryBuilder('registro')
+      .select('AVG(CAST(registro.valorVatios1 AS FLOAT))', 'promedioVatios1')
+      .addSelect('AVG(CAST(registro.valorVatios2 AS FLOAT))', 'promedioVatios2')
+      .addSelect('COUNT(registro.id)', 'totalRegistros')
+      .where('registro.timestamp >= :hace365Dias', { hace365Dias })
+      .getRawOne();
+
+    return {
+      promedioVatios1: parseFloat(resultado?.promedioVatios1 || 0),
+      promedioVatios2: parseFloat(resultado?.promedioVatios2 || 0),
+      totalRegistros: parseInt(resultado?.totalRegistros || 0),
+      periodo: {
+        desde: hace365Dias,
+        hasta: new Date(),
+      },
+    };
   }
 }

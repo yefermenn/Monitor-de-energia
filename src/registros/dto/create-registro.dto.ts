@@ -8,7 +8,11 @@ export class CreateRegistroMedidaDto {
 
   @IsNumber({ maxDecimalPlaces: 3 })
   @Type(() => Number)
-  valorWatios: number;
+  valorVatios1: number;
+
+  @IsNumber({ maxDecimalPlaces: 3 })
+  @Type(() => Number)
+  valorVatios2: number;
 
   @IsOptional()
   @Type(() => Date)

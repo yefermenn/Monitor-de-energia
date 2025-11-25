@@ -20,7 +20,7 @@ export class UsuarioMedidor {
   @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
 
-  @Column("integer", { name: "usuario_id", nullable: true, unique: true })
+  @Column("integer", { name: "usuario_id"})
   usuarioId: number | null;
 
   @Column("character varying", {

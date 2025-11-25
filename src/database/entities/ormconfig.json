@@ -7,7 +7,7 @@
     "username": "postgres",
     "password": "CAmi.lo_123",
     "database": "",
-    "synchronize": false,
+    "synchronize": true,
     "entities": ["entities/*.js"]
   }
 ]

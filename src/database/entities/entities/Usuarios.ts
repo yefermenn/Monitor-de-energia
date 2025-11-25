@@ -14,6 +14,9 @@ export class Usuarios {
   @PrimaryGeneratedColumn({ type: "integer", name: "id" })
   id: number;
 
+  @Column("character varying", { name: "nombre", length: 255 })
+  nombre: string;
+
   @Column("character varying", { name: "correo", unique: true, length: 255 })
   correo: string;
 

@@ -17,8 +17,11 @@ export class RegistrosMedidas {
   @Column("integer", { name: "numero_sensor" })
   numeroSensor: number;
 
-  @Column("numeric", { name: "valor_watios", precision: 10, scale: 3 })
-  valorWatios: number;
+  @Column("numeric", { name: "valor_vatios1", precision: 10, scale: 3 })
+  valorVatios1: number;
+  
+  @Column("numeric", { name: "valor_vatios2", precision: 10, scale: 3 })
+  valorVatios2: number;
 
   @Column("timestamp without time zone", {
     name: "timestamp",
