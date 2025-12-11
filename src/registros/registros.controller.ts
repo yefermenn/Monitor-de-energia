@@ -32,4 +32,19 @@ export class RegistrosController {
     async obtenerPromedioUltimoAno() {
       return this.registrosService.obtenerPromedioUltimoAno();
     }
+    
+    @Get('prom/dia/diarios')
+    async obtenerPromediosDiariosUltimos7Dias() {
+      return this.registrosService.obtenerPromediosDiariosUltimos7Dias();
+    }
+
+    @Get('prom/sem/semanales')
+    async obtenerPromediosSemananalesUltimas4Semanas() {
+      return this.registrosService.obtenerPromediosSemananalesUltimas4Semanas();
+    }
+
+    @Get('prom/mes/mensuales')
+    async obtenerPromediosMensualesHistorico() {
+      return this.registrosService.obtenerPromediosMensualesHistorico();
+    }
 }

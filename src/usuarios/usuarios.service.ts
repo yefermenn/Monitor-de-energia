@@ -29,6 +29,7 @@ export class UsuariosService {
 		return await this.dataSource.transaction(async (manager) => {
 			// crear usuario
 			const usuario = this.usuariosRepo.create({
+				nombre: dto.nombre,
 				correo: dto.correo,
 				contraseA: dto.contraseA,
 				fechaCreacion: dto.fechaCreacion ?? null,
